@@ -5,15 +5,15 @@ using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using HeroDatingApp.Data;
 using HeroDatingApp.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace HeroDatingApp.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")] //  route to : ../api/users
-    public class UsersController : ControllerBase
+    [Authorize]
+    public class UsersController : BaseApiController
     {
         private readonly DataContext _context;
         public UsersController(DataContext context)
@@ -21,6 +21,7 @@ namespace HeroDatingApp.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
