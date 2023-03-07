@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Versioning;
-using System.Threading.Tasks;
 using HeroDatingApp.Data;
 using HeroDatingApp.Entities;
 using Microsoft.AspNetCore.Authorization;

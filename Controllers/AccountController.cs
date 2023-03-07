@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
 using HeroDatingApp.Data;
 using HeroDatingApp.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +5,6 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using HeroDatingApp.DTOs;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using HeroDatingApp.Interfaces;
 
 namespace HeroDatingApp.Controllers

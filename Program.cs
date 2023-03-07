@@ -1,12 +1,5 @@
-using System.Text;
-using HeroDatingApp.Data;
 using HeroDatingApp.Extensions;
-using HeroDatingApp.Interfaces;
-using HeroDatingApp.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
