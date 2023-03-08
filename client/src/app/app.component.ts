@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { AccountService } from './_services/account.service';
+import { User } from './_models/user';
 
 @Component({
   selector: 'app-root',
@@ -9,16 +10,19 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent implements OnInit {
 
   title = 'Hello Heroes';
-  users: any;
-  constructor(private http: HttpClient)
+  constructor(private accountService: AccountService)
   {
 
   }
   ngOnInit(): void {
-    this.http.get('http://localhost:4200').subscribe({
-      next: response => this.users = response,
-      error: error => console.log(error),
-      complete: () => console.log('Request complete')
-    });
+    this.setCurrentUser();
+  }
+
+
+  setCurrentUser() {
+    const userString = localStorage.getItem('user')!;
+    if (!userString) return;
+    const user : User = JSON.parse(userString);
+    this.accountService.setCurrentUser(user);
   }
 }
