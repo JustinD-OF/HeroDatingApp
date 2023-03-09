@@ -1,3 +1,4 @@
+using HeroDatingApp.client.Middleware;
 using HeroDatingApp.Extensions;
 
 
@@ -10,6 +11,8 @@ builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200")); 
 
