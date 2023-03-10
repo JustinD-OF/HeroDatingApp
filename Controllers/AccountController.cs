@@ -31,9 +31,6 @@ namespace HeroDatingApp.Controllers
             var user = new AppUser
             {
                 UserName = registerDto.UserName.ToLower(),
-                Age = 21,
-                Sex = "F",
-                FullName = "123",
                 Power = "Super cool",
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                 PasswordSalt = hmac.Key
