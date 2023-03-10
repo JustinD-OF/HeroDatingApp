@@ -1,15 +1,15 @@
-using HeroDatingApp.Data;
-using HeroDatingApp.Entities;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
-using Microsoft.AspNetCore.Mvc;
 using System.Text;
+using HeroDatingApp.Data;
 using HeroDatingApp.DTOs;
+using HeroDatingApp.Entities;
 using HeroDatingApp.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HeroDatingApp.Controllers
 {
-    public class AccountController: BaseApiController
+    public class AccountController : BaseApiController
     {
 
         private readonly DataContext _context;
@@ -19,9 +19,9 @@ namespace HeroDatingApp.Controllers
             _tokenService = tokenService;
             _context = context;
         }
- 
+
         [HttpPost("register")] // POST: api/account/register?username=dave&password=...
-        public async Task<ActionResult<UserDto>> Register (RegisterDto registerDto)
+        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             if (await UserExists(registerDto.UserName))
                 return BadRequest("Username already in use");
@@ -49,7 +49,7 @@ namespace HeroDatingApp.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(user => 
+            var user = await _context.Users.SingleOrDefaultAsync(user =>
                 user.UserName == loginDto.Username);
 
             if (user == null) return Unauthorized("Username incorrect.");
@@ -69,7 +69,7 @@ namespace HeroDatingApp.Controllers
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user)
             };
-;
+            
         }
 
 
