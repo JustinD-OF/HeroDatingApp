@@ -35,9 +35,6 @@ namespace HeroDatingApp.Services
             var token = tokenHandler.CreateToken(tokenDescriptor); // Creates token with relevant description
 
             return tokenHandler.WriteToken(token);
-
-
-
         }
     }
 }

@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using System.Security.Cryptography;
 using AutoMapper;
 using HeroDatingApp.Data;
 using HeroDatingApp.DTOs;
@@ -5,6 +7,7 @@ using HeroDatingApp.Entities;
 using HeroDatingApp.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace HeroDatingApp.Controllers
 {
@@ -29,6 +32,23 @@ namespace HeroDatingApp.Controllers
         public async Task<ActionResult<MemberDto>> GetUser(string userName)
         {
             return await _userRepository.GetMemberAsync(userName);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser (MemberUpdateDto memberUpdateDto) 
+        {
+            var userName = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userRepository.GetUserByUsernameAsync(userName);
+
+            if (user == null) 
+                return NotFound();
+
+            _mapper.Map(memberUpdateDto, user);
+
+            if (await _userRepository.SaveAllAsync()) 
+                return NoContent();
+
+            return BadRequest("Failed to update user");
         }
 
     }

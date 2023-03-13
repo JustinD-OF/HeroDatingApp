@@ -29,6 +29,7 @@
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/bootswatch/dist/spacelab/bootstrap.css",
               "node_modules/ngx-toastr/toastr.css",
+              "node_modules/ngx-spinner/animations/ball-pulse.css",
               "src/styles.css"
             ],
             "scripts": []
