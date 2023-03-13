@@ -1,4 +1,5 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { faEnvelope, faHeart, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Member } from 'src/app/_models/member';
 
 @Component({
@@ -8,6 +9,9 @@ import { Member } from 'src/app/_models/member';
 })
 export class MemberCardComponent {
   @Input() member: Member | undefined;
+  faUser = faUser;
+  faEnvelope = faEnvelope;
+  faHeart = faHeart;
 
 
 }

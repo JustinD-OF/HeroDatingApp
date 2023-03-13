@@ -1,4 +1,5 @@
 using HeroDatingApp.Data;
+using HeroDatingApp.Helpers;
 using HeroDatingApp.Interfaces;
 using HeroDatingApp.Services;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,10 @@ namespace HeroDatingApp.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
+
+            services.AddScoped<IPhotoService, PhotoService>();
 
             return services;
 
