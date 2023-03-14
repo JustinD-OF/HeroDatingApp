@@ -1,5 +1,6 @@
 using HeroDatingApp.DTOs;
 using HeroDatingApp.Entities;
+using HeroDatingApp.Helpers;
 
 namespace HeroDatingApp.Interfaces
 {
@@ -10,7 +11,7 @@ namespace HeroDatingApp.Interfaces
         Task<IEnumerable<AppUser>> GetUsersAsync();
         Task<AppUser> GetUserByIdAsync(int id);
         Task<AppUser> GetUserByUsernameAsync(string userName);
-        Task<IEnumerable<MemberDto>> GetMembersAsync();
+        Task<PagedList<MemberDto>> GetMembersAsync(UserParameters userparams);
         Task<MemberDto> GetMemberAsync(string userName);
     }
 }

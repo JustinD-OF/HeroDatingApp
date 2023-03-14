@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace HeroDatingApp.Extensions
 {
-    static public class DateTimeExtensions
+    public static class DateTimeExtensions
     {
         public static int CalculateAge(this DateOnly dateOfBirth)
         {
