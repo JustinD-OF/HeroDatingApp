@@ -12,54 +12,47 @@ import { MembersService } from 'src/app/_services/members.service';
   templateUrl: './member-list.component.html',
   styleUrls: ['./member-list.component.css']
 })
-export class MemberListComponent implements OnInit{
+export class MemberListComponent implements OnInit {
   // members$: Observable<Member[]> | undefined;
 
   members: Member[] = [];
   pagination: Pagination | undefined;
   userParameters: UserParameters | undefined;
-  user: User | undefined;
-  genderList = [{ value: 'male', display: 'Males' }, { value: 'female', display: 'Females'}];
+  genderList = [{ value: 'male', display: 'Males' }, { value: 'female', display: 'Females' }];
 
-  constructor(private memberService: MembersService, private accountService: AccountService){
-    this.accountService.currentUser$.pipe(take(1)).subscribe({
-      next: user => {
-        if (user) {
-          this.userParameters = new UserParameters(user);
-          this.user = user;
-        }
-      }
-    })
+  constructor(private memberService: MembersService) {
+    this.userParameters = memberService.getUserParameters();
   }
 
   ngOnInit(): void {
     this.loadMembers();
   }
 
-  pageChanged(event: any){
-    if (this.userParameters && this.userParameters?.pageNumber !== event.page){
+  pageChanged(event: any) {
+    if (this.userParameters && this.userParameters?.pageNumber !== event.page) {
       this.userParameters.pageNumber = event.page;
+      this.memberService.setUserParameters(this.userParameters);
       this.loadMembers();
     }
   }
 
   loadMembers() {
-    if (!this.userParameters) return;
-    this.memberService.getMembers(this.userParameters).subscribe({
-      next: response => {
-        if (response.result && response.pagination){
-          this.members = response.result;
-          this.pagination = response.pagination;
+    if (this.userParameters) {
+      this.memberService.setUserParameters(this.userParameters);
+      this.memberService.getMembers(this.userParameters).subscribe({
+        next: response => {
+          if (response.result && response.pagination) {
+            this.members = response.result;
+            this.pagination = response.pagination;
+          }
         }
-      }
-    })
+      })
+    }
   }
 
-  resetFilter(){
-    if (this.user){
-      this.userParameters = new UserParameters(this.user);
-      this.loadMembers();
-    }
+  resetFilter() {
+    this.userParameters = this.memberService.resetUserParameters();
+    this.loadMembers();
   }
 
 }
