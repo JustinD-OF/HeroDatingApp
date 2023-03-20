@@ -15,6 +15,7 @@ namespace HeroDatingApp.Data
 
         public DbSet<UserLike> Likes {get; set;}
 
+        public DbSet<Message> Messages {get; set;}
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -33,8 +34,17 @@ namespace HeroDatingApp.Data
                 .WithMany(l => l.LikedByUsers)
                 .HasForeignKey(s => s.TargetUserId)
                 .OnDelete(DeleteBehavior.Cascade);
-                // When we will use SQL server, We cannot have two 
+                // When we will use SQL server, We cannot have Cascade twice, so we need one time 'NoAction'
 
+            builder.Entity<Message>()
+                .HasOne(u => u.Recipient)
+                .WithMany(m => m.MessagesReceived)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Message>()
+                .HasOne(u => u.Sender)
+                .WithMany(m => m.MessagesSent)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

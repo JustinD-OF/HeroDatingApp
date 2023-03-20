@@ -15,10 +15,18 @@ namespace HeroDatingApp.Helpers
                     options => options.MapFrom(source => source.Photos.FirstOrDefault(x => x.IsMain).Url))
                     // Then in options we specify we want to map there from the user's main photo
                 .ForMember(destination => destination.Age, 
-                options => options.MapFrom(source => source.DateOfBirth.CalculateAge()));
+                    options => options.MapFrom(source => source.DateOfBirth.CalculateAge()));
             CreateMap<Photo, PhotoDto>();
             CreateMap<MemberUpdateDto, AppUser>();
             CreateMap<RegisterDto,AppUser>();
+            CreateMap<Message, MessageDto>()
+            // Map all the main photos of senders
+                .ForMember(destination => destination.SenderPhotoUrl,
+                    options => options.MapFrom(source => source.Sender.Photos.FirstOrDefault(x => x.IsMain).Url))
+            // Map the main photos of recipients
+                .ForMember(destination => destination.RecipientPhotoUrl,
+                    options => options.MapFrom(source => source.Recipient.Photos.FirstOrDefault(x => x.IsMain).Url));
+
         }
         
     }
