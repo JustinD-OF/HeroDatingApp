@@ -30,6 +30,8 @@ namespace HeroDatingApp.Extensions
 
             services.AddScoped<LogUserActivity>();
 
+            services.AddScoped<ILikesRepository, LikesRepository>();
+
             return services;
 
         }

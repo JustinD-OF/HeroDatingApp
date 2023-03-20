@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, take } from 'rxjs';
 import { Member } from 'src/app/_models/member';
 import { Pagination } from 'src/app/_models/pagination';
-import { User } from 'src/app/_models/user';
 import { UserParameters } from 'src/app/_models/userParameters';
-import { AccountService } from 'src/app/_services/account.service';
 import { MembersService } from 'src/app/_services/members.service';
 
 @Component({
@@ -54,5 +51,4 @@ export class MemberListComponent implements OnInit {
     this.userParameters = this.memberService.resetUserParameters();
     this.loadMembers();
   }
-
 }
