@@ -1,24 +1,35 @@
 using Microsoft.EntityFrameworkCore;
 using HeroDatingApp.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace HeroDatingApp.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<AppUser, AppRole, int, IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public DataContext(DbContextOptions options) : base (options)
         {
 
         }
-
-        public DbSet<AppUser> Users {get; set;}
         public DbSet<Photo> Photos {get; set;}
-
         public DbSet<UserLike> Likes {get; set;}
-
         public DbSet<Message> Messages {get; set;}
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<AppUser>()
+                .HasMany(userrole => userrole.UserRoles)
+                .WithOne(user => user.User)
+                .HasForeignKey(userrole => userrole.UserId)
+                .IsRequired();
+
+            builder.Entity<AppRole>()
+                .HasMany(userrole => userrole.UserRoles)
+                .WithOne(user => user.Role)
+                .HasForeignKey(userrole => userrole.RoleId)
+                .IsRequired();
+
 
             builder.Entity<UserLike>()
                 .HasKey(k => new {k.SourceUserId, k.TargetUserId});

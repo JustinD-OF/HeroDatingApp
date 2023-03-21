@@ -1,5 +1,8 @@
 using System.Text;
+using HeroDatingApp.Data;
+using HeroDatingApp.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace HeroDatingApp.Extensions
@@ -8,6 +11,14 @@ namespace HeroDatingApp.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddIdentityCore<AppUser>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+            })
+            .AddRoles<AppRole>()
+            .AddRoleManager<RoleManager<AppRole>>()
+            .AddEntityFrameworkStores<DataContext>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -20,7 +31,13 @@ namespace HeroDatingApp.Extensions
                     };
                 });
 
-                return services;
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
+            });
+
+            return services;
         }
     }
 }

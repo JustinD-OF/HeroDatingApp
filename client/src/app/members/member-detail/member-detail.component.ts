@@ -13,11 +13,11 @@ import { MessageService } from 'src/app/_services/message.service';
   styleUrls: ['./member-detail.component.css']
 })
 export class MemberDetailComponent implements OnInit{
-  @ViewChild('memberTabs', {static: true}) memberTabs: TabsetComponent | undefined;
+  @ViewChild('memberTabs', {static: true}) memberTabs?: TabsetComponent;
   member: Member = {} as Member;
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
-  activeTab: TabDirective | undefined;
+  activeTab?: TabDirective;
   messages: Message[] = [];
 
   constructor(private memberService: MembersService, private route: ActivatedRoute, private messageService: MessageService ){}

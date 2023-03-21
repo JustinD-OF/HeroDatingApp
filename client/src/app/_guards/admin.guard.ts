@@ -7,19 +7,20 @@ import { AccountService } from '../_services/account.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
 
-constructor(private accountService: AccountService, private toastr: ToastrService){}
+export class AdminGuard implements CanActivate {
 
+  constructor(private accountService: AccountService, private toastr: ToastrService) {}
   canActivate(): Observable<boolean> {
     return this.accountService.currentUser$.pipe(
-      map(user =>{
-        if (user) return true;
+      map(user => {
+        if (!user) return false;
+        if (user.roles.includes('Admin') || user.roles.includes('Moderator')) {return true;}
         else {
-          this.toastr.error('You shall not pass!');
+          this.toastr.error('You cannot enter');
           return false;
         }
       })
-    );
+    )
   }
 }
