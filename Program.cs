@@ -3,6 +3,7 @@ using HeroDatingApp.client.Middleware;
 using HeroDatingApp.Data;
 using HeroDatingApp.Entities;
 using HeroDatingApp.Extensions;
+using HeroDatingApp.SignalR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,13 +21,19 @@ var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
-app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200")); 
+app.UseCors(builder => builder
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials()
+    .WithOrigins("http://localhost:4200", "https://localhost:7043", "http://localhost:20788")); 
 
 // Use middleware between Cors usage and Controller mapping
 app.UseAuthentication(); // Do you have valid token
 app.UseAuthorization(); // what are you allowed to do
 
 app.MapControllers();
+app.MapHub<PresenceHub>("hubs/presence");
+app.MapHub<MessageHub>("hubs/message");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

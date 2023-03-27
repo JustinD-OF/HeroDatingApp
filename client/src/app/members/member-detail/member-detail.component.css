@@ -14,3 +14,7 @@
   border-top: none;
 }
 .ngx-gallery { display: inline-block; margin-bottom: 20px; }
+
+.fa-icon {
+  color: rgb(0, 199, 66);
+}

@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { faEnvelope, faHeart, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faHeart, faUser, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { Member } from 'src/app/_models/member';
 import { MembersService } from 'src/app/_services/members.service';
 import { ToastrService } from 'ngx-toastr';
+import { PresenceService } from 'src/app/_services/presence.service';
 
 @Component({
   selector: 'app-member-card',
@@ -14,8 +15,10 @@ export class MemberCardComponent {
   faUser = faUser;
   faEnvelope = faEnvelope;
   faHeart = faHeart;
+  faGlobe = faGlobe;
 
-  constructor(private memberService: MembersService, private toastr: ToastrService){}
+
+  constructor(private memberService: MembersService, private toastr: ToastrService, public presenceService: PresenceService){}
 
   ngOnInit() : void {
 

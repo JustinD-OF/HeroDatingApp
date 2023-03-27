@@ -1,7 +1,9 @@
+using System.Globalization;
 using HeroDatingApp.Data;
 using HeroDatingApp.Helpers;
 using HeroDatingApp.Interfaces;
 using HeroDatingApp.Services;
+using HeroDatingApp.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace HeroDatingApp.Extensions
@@ -33,6 +35,10 @@ namespace HeroDatingApp.Extensions
             services.AddScoped<ILikesRepository, LikesRepository>();
 
             services.AddScoped<IMessageRepository, MessageRepository>();
+
+            services.AddSignalR();
+
+            services.AddSingleton<PresenceTracker>();
 
             return services;
 
