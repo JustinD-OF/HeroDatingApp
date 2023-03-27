@@ -25,7 +25,7 @@ app.UseCors(builder => builder
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials()
-    .WithOrigins("http://localhost:4200", "https://localhost:7043", "http://localhost:20788")); 
+    .WithOrigins("http://localhost:4200")); 
 
 // Use middleware between Cors usage and Controller mapping
 app.UseAuthentication(); // Do you have valid token
@@ -44,6 +44,7 @@ try
     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
     
     await context.Database.MigrateAsync();
+    await context.Database.ExecuteSqlRawAsync("DELETE FROM [Connections]"); // TRUNCATE TABLE [Connections] when using something else then sqlite
     await Seed.SeedUsers(userManager, roleManager);
 }
 catch (Exception ex)
