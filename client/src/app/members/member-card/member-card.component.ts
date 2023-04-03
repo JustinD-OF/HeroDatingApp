@@ -27,6 +27,5 @@ export class MemberCardComponent {
     this.memberService.addLike(member.userName).subscribe({
       next: () => this.toastr.success('You liked ' + member.knownAs)
     });
-
   }
 }

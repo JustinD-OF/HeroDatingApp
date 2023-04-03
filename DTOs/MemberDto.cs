@@ -18,7 +18,5 @@ namespace HeroDatingApp.DTOs
         public string City {get; set;}
         public string Address {get; set;}
         public List<PhotoDto> Photos {get; set;} = new List<PhotoDto>();
-
-        
     }
 }

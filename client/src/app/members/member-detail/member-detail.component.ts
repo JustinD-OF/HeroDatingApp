@@ -10,6 +10,8 @@ import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { AccountService } from 'src/app/_services/account.service';
 import { take } from 'rxjs';
 import { User } from 'src/app/_models/user';
+import { MembersService } from 'src/app/_services/members.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -28,7 +30,8 @@ export class MemberDetailComponent implements OnInit, OnDestroy{
   faCircleUser = faCircleUser;
 
   constructor(private accountService: AccountService, private route: ActivatedRoute,
-              private messageService: MessageService, public presenceService: PresenceService, private router: Router ){
+              private messageService: MessageService, public presenceService: PresenceService, private router: Router,
+              private memberService: MembersService, private toastr: ToastrService){
                 this.accountService.currentUser$.pipe(take(1)).subscribe({
                   next: user => {
                     if (user) this.user = user;
@@ -59,6 +62,13 @@ export class MemberDetailComponent implements OnInit, OnDestroy{
     ]
     this.galleryImages = this.getImages();
   }
+
+  addLike(member: Member){
+    this.memberService.addLike(member.userName).subscribe({
+      next: () => this.toastr.success('You liked ' + member.knownAs)
+    });
+  }
+
 
   ngOnDestroy(): void{
     this.messageService.stopHubConnection();

@@ -1,5 +1,3 @@
-using System.Security;
-
 namespace HeroDatingApp.Helpers
 {
     public class PaginationHeader
@@ -16,6 +14,5 @@ namespace HeroDatingApp.Helpers
         public int ItemsPerPage {get; set;}
         public int TotalItems {get; set;}
         public int TotalPages {get; set;}
-
     }
 }

@@ -2,7 +2,6 @@ namespace HeroDatingApp.Helpers
 {
     public class UserParameters : PaginationParameters
     {
-
         public string CurrentUsername {get; set;}
 
         public string Gender {get; set;}

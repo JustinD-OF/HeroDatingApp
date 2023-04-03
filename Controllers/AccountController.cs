@@ -33,7 +33,7 @@ namespace HeroDatingApp.Controllers
             var user = _mapper.Map<AppUser>(registerDto);
 
             user.UserName = registerDto.UserName.ToLower();
-            user.Power = "Super cool";
+            user.Power = registerDto.Power.ToLower();
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
